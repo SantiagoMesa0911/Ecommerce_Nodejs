@@ -1,20 +1,22 @@
 const express = require('express');
-const morgan = require('morgan')
+const morgan = require('morgan');
+const cookie = require('cookie-parser');
 const { port } = require('./config');
-const { connection } = require('./config/db')
+const { connection } = require('./config/db');
+const users = require('./routes/user');
+const auth = require('./routes/auth');
+const app = express();
 
-const app = express()
-
-connection()
+connection();
 
 //UTLIZANDO MIDDLEWARE
-app.use(morgan('dev'))
-app.get('/', (req, res) => {
-	res.json({
-		'name': 'ecommerce'
-	})
-})
+app.use(express.json());
+app.use(morgan('dev'));
+app.use(cookie());
+
+users(app);
+auth(app);
 
 app.listen(port, () => {
-	console.log(`El servidor esta corriendo en http://localhost${port}`);
-})
+  console.log(`El servidor esta corriendo en http://localhost${port}`);
+});
