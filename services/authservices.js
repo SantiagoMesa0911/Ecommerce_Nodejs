@@ -42,12 +42,13 @@ class Auth {
   }
 
   #getUserData(data) {
-    const { name, email, role, id } = data;
+    const { name, email, country, role, id } = data;
     console.log(data);
     const user = {
       name,
       email,
-      // role,
+      country,
+      role,
       id,
     };
     const token = this.#createToken(user);
@@ -78,7 +79,7 @@ class Auth {
   async #compare(string, hash) {
     try {
       return await bctypt.compare(string, hash);
-    } catch (error) {}
+    } catch (error) { }
   }
 }
 
