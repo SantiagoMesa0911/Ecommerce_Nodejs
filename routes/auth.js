@@ -9,14 +9,13 @@ const auth = (app) => {
   app.use('/api/auth', router);
 
   router.post('/signup', async (req, res) => {
-    const user = await AuthServ.signup(req.body);
-    authResponse(res, user, 400);
+    const result = await AuthServ.signup(req.body);
+    return authResponse(res, result, 401)
   });
 
   router.post('/login', async (req, res) => {
-    const user = await AuthServ.login(req.body);
-
-    authResponse(res, user, 401);
+    const result = await AuthServ.login(req.body);
+    return authResponse(res, result, 400)
   });
 
   router.get('/logout', (req, res) => {

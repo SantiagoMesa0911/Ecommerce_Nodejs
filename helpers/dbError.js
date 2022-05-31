@@ -6,13 +6,13 @@ const dbError = (error) => {
   if (error.code === 11000) {
     return {
       created: false,
-      errors: duplicatedError(error.keyValue),
+      errors: duplicatedError(error.keyValue)
     };
   }
 
   return {
     created: false,
-    errors: validateError(error.errors),
+    errors: validateError(error.errors)
   };
 };
 
