@@ -1,14 +1,16 @@
-const production = require('../config/index');
+const { production } = require('../config');
 
 const authResponse = (res, result, statusCode) => {
   if (result.success) {
     const { token, ...data } = result;
-    return res.cookie("token", token, {
-      httpOnly: true,
-      secure: production, //solo disponible a traves de https*
-      sameSite: 'none',
-      expires: new Date(new Date().setDate(new Date().getDate() + 7)),
-    }).json(data);
+    return res
+      .cookie('token', token, {
+        httpOnly: true,
+        secure: production, //solo disponible a traves de https*
+        sameSite: 'none',
+        expires: new Date(new Date().setDate(new Date().getDate() + 7)),
+      })
+      .json(data);
   }
   return res.status(statusCode).json(result);
 };
