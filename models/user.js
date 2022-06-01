@@ -21,10 +21,6 @@ const Userschema = new mongoose.Schema(
       type: String,
       required: [true, 'La contraseña es requerida'],
     },
-    country: {
-      type: String,
-      required: [true, 'La ciudad es requerida'],
-    },
     role: {
       type: Number,
       default: 1,

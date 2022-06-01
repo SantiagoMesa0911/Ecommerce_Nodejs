@@ -1,47 +1,47 @@
 const jwt = require('jsonwebtoken');
-const { jwtsecret } = require('../config');
+const { jwtsecret } = require('../config/index');
 
 function authValidation(role) {
   return (req, res, next) => {
-    req.neededRole = role
-    return validateToken(req, res, next)
-  }
+    req.neededRole = role;
+    return validateToken(req, res, next);
+  };
 }
 
 function validateToken(req, res, next) {
-  const token = req.cookies.token
-  console.log(token)
+  const token = req.cookies.token;
   if (!token) {
     return res.status(403).json({
       success: false,
       message: 'A token is required for this process',
-    })
+      nohay: 'no hay token',
+    });
   }
   return verifyToken(token, req, res, next);
 }
 
 function verifyToken(token, req, res, next) {
   try {
-    const decoded = jwt.verify(token, jwtsecret)
-    req.user = decoded
-    return validateRole(req, res, next)
+    const decoded = jwt.verify(token, jwtsecret);
+    req.user = decoded;
+    return validateRole(req, res, next);
   } catch ({ message, name }) {
     return res.status(403).json({
       success: false,
       message,
-      type: name
-    })
+      type: name,
+    });
   }
 }
 
 function validateRole(req, res, next) {
   if (req.user.role >= req.neededRole) {
-    return next()
+    return next();
   }
   return res.status(403).json({
     success: false,
-    message: 'Insufficient permissions, You need a higher role'
-  })
+    message: 'Insufficient permissions, You need a higher role',
+  });
 }
 
-module.exports = authValidation
+module.exports = authValidation;
