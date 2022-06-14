@@ -25,6 +25,18 @@ const Userschema = new mongoose.Schema(
       type: Number,
       default: 1,
     },
+    ProfilePic: String,
+    provider: {
+      local: Boolean,
+      facebook: Boolean,
+      google: Boolean,
+      twitter: Boolean
+    },
+    idProvider: {
+      facebook: String,
+      google: String,
+      twitter: String
+    }
   },
   {
     timestamps: true,

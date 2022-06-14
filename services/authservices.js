@@ -29,6 +29,7 @@ class Auth {
     if (data && data.password) {
       data.password = await this.#encrypt(data.password);
     }
+    data.provider = { local: true }
     const userService = new Users();
     const user = await userService.createUser(data);
     if (!user.created) {
@@ -41,13 +42,34 @@ class Auth {
     return this.#getUserData(user.user);
   }
 
-  #getUserData(data) {
-    const { name, email, role, id } = data;
+  async sociallogin(data) {
+    const userServ = new Users()
     const user = {
+      idProvider: data.id,
+      name: data.displayName,
+      email: data.emails[0].value,
+      profilePic: data.photos[0].value,
+      provider: data.provider
+    }
+    const result = await userServ.getOrCreateByProvider(user)
+    if (!result.created) {
+      return {
+        success: false,
+        errors: result.errors
+      };
+    }
+    return this.#getUserData(result.user)
+  }
+
+  #getUserData(data) {
+    const { name, email, role, id, provider,idProvider } = data;
+    const user = {
+      id,
+      role,
       name,
       email,
-      role,
-      id,
+      provider,
+      idProvider
     };
     const token = this.#createToken(user);
     return {

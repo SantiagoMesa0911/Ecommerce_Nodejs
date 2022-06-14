@@ -15,6 +15,21 @@ const authResponse = (res, result, statusCode) => {
   return res.status(statusCode).json(result);
 };
 
+function providerResponse(res,result, statusCode) {
+  if (result.success) {
+    const { token, ...data } = result;
+    return res
+      .cookie('token', token, {
+        httpOnly: true,
+        secure: production, //solo disponible a traves de https*
+        sameSite: 'none',
+        expires: new Date(new Date().setDate(new Date().getDate() + 7)),
+      })
+      .redirect('http://localhost:3000');
+  }
+  return res.status(statusCode).json(result);
+}
+
 const deleteCookie = (res) => {
   return res
     .cookie('token', '', {
@@ -29,4 +44,4 @@ const deleteCookie = (res) => {
     });
 };
 
-module.exports = { authResponse, deleteCookie };
+module.exports = { authResponse, deleteCookie,providerResponse };

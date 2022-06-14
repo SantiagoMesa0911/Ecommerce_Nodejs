@@ -1,19 +1,32 @@
-const { mongoose } = require("../config/db");
+const {mongoose} = require("../config/db")
 
-const Productschema = new mongoose.Schema({
-	name: {
-		type: String,
-		required: [true, 'El nombre es requerido'],
-		minlength: [5, 'El nombre no debe ser menor a 5 caracteres']
-	},
-	country: {
-		type: String,
-		required: [true, 'country is required'],
-	}
-}, {
-	timestamps: true,
+const productSchema = new mongoose.Schema({
+    name:{
+        type:String,
+        required:[true,"name is required"],
+    },
+    description:{
+        type:String,
+        required:[true,"description"]
+    },
+    price:{
+        type:Number,
+        required:[true,"price is required"]
+    },
+    image:{
+        type:[String],
+        required:[true,"image is required"]
+    },
+    stock:{
+        type:Number,
+        required:[true,"stock is required"]
+    },
+	owner:{
+        type:mongoose.Schema.Types.ObjectId,
+        ref:"user"
+    }
 })
 
-const ProductModel = mongoose.model('user', Productschema)
+const ProductModel = mongoose.model("product",productSchema)
 
-module.exports = ProductModel
+module.exports = ProductModel 
