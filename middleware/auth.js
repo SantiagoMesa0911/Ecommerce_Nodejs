@@ -14,7 +14,7 @@ function validateToken(req, res, next) {
     return res.status(403).json({
       success: false,
       message: 'A token is required for this process',
-      nohay: 'no hay token',
+     /*  nohay: 'no hay token', */
     });
   }
   return verifyToken(token, req, res, next);
@@ -23,6 +23,9 @@ function validateToken(req, res, next) {
 function verifyToken(token, req, res, next) {
   try {
     const decoded = jwt.verify(token, jwtsecret);
+    delete decoded.iat
+    delete decoded.exp
+
     req.user = decoded;
     return validateRole(req, res, next);
   } catch ({ message, name }) {
