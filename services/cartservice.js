@@ -28,7 +28,7 @@ class Cart {
 
 		return result
 	}
-	async create(idUser,) {
+	async create(idUser) {
 		const cart = CartModel.create({
 			_id: idUser,
 			items: []
