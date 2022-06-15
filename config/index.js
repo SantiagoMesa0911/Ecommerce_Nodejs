@@ -10,6 +10,8 @@ const config = {
   dbPassword: process.env.DB_PASSWORD,
   dbHost: process.env.DB_HOST,
   dbName: process.env.DB_NAME,
+  StripePublicKey: process.env.STRIPE_PUBLIC_KEY,
+  StripeSecretKey: process.env.STRIPE_SECRET_KEY,
   OauthClientID: process.env.OAUTH_CLIENT_ID,
   OauthClientSecret: process.env.OAUTH_CLIENT_SECRET,
   FacebookAppId: process.env.FACEBOOK_APP_ID,

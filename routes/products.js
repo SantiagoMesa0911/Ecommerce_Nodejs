@@ -20,6 +20,27 @@ function products(app) {
 
 		return res.json(result)
 	})
+
+	router.get('/filter/category', authMiddleware(1), async (req, res) => {
+		const {
+			query: { category },
+		} = req
+		const filtered = await productsServ.filterCategories(category)
+		filtered.length > 0
+			? res.status(200).json({ message: ` Mostrando todos los productos de la categoria ${category}`, filtered })
+			: res.status(404).json({ message: `No tenemos productos en la categoria ${category}` })
+	})
+
+	router.get('/filter/rangeprice', authMiddleware(1), async (req, res) => {
+		const {
+			query: { price },
+		} = req
+		const filtered = await productsServ.orderByRange(price);
+		console.log(filtered);
+		filtered
+			? res.status(200).json({ message: 'Request exitosa', filtered })
+			: res.status(404).json({ message: 'Error algo salio mal' });
+	})
 }
 
 module.exports = products
