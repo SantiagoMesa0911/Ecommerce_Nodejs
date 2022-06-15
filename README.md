@@ -1,5 +1,5 @@
 # Ecommerce_Nodejs
-## Comandos para levantar o correr el proyecto
+## Comandos para correr el proyecto
 *Los comandos utilizados para arrancar el proyecto son :*
 ```
 npm run dev
